@@ -74,7 +74,6 @@ while True:
             rating = None
 
         href = book.h3.a["href"]
-        # book_url = "https://books.toscrape.com/" + href.replace("../../../", "")
         book_url = urljoin(url, href)
 
 
@@ -93,15 +92,8 @@ while True:
             })
             continue
 
-        # except requests.exceptions.RequestException as e:
-        #     print("error:", e)
-        #     continue
-
         response.encoding = "utf-8"
         detail_soup = BeautifulSoup(response.text, "html.parser")
-
-        # breadcrumb = detail_soup.select("ul.breadcrumb li a")
-        # category = detail_soup.select("ul.breadcrumb li a")[2].get_text(strip=True)
 
         breadcrumb = detail_soup.select("ul.breadcrumb li a")
         if len(breadcrumb) > 2:
@@ -149,10 +141,6 @@ pprint(failed_books)
 print(f"\nTotal books scraped: {len(data)}")
 print(f"Failed pages: {len(failed_pages)}")
 print(f"Failed books: {len(failed_books)}")
-
-# Total books scraped: 1000
-# Failed pages: 0
-# Failed books: 0
 
 df=pd.DataFrame(data)
 print(df)
